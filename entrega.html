@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escolha quando sua compra chegará</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* HEADER */
+.header {
+  background: #fff;
+  padding: 14px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.back {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.header h1 {
+  font-size: 20px;
+  margin: 12px 0 6px;
+}
+
+.address {
+  font-size: 14px;
+  color: #555;
+}
+
+/* CONTAINER */
+.container {
+  padding: 16px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+}
+
+/* FULL HEADER */
+.full-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.full {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00a650;
+}
+
+.product {
+  font-size: 22px;
+}
+
+/* OPTIONS */
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid #eee;
+  cursor: pointer;
+}
+
+.option:first-of-type {
+  border-top: none;
+}
+
+.option input {
+  margin-top: 3px;
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.option-sub {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.option-price {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.option-price.free {
+  color: #00a650;
+}
+
+/* FOOTER */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 14px 16px;
+  border-top: 1px solid #ddd;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: #3483fa;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* LOADING */
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #3483fa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.product-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="back" onclick="history.back()">←</div>
+  </div>
+
+  <h1>Escolha quando sua compra chegará</h1>
+  <div class="address">📍 Envio para seu endereço</div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="full-header">
+      <span class="full">Envio disponivel 1</span>
+    <span class="product">
+      <img src="https://i.ibb.co/vxW8N8dP/produto-2.png" alt="Produto" class="product-img">
+    </span>
+
+    </div>
+
+    <label class="option">
+      <input type="radio" name="frete" id="freteGratis">
+      <div class="option-content">
+        <div class="option-title">Entrega econômica</div>
+        <div class="option-sub">Entrega em até <strong>7 dias úteis para todo brasil</strong></div>
+      </div>
+      <div class="option-price free">Grátis</div>
+    </label>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-row">
+    <span>Frete</span>
+    <strong id="valorFrete">Gratis</strong>
+  </div>
+  <button onclick="continuar()">Continuar</button>
+</div>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+</div>
+
+<script>
+/* ===== ENDEREÇO ===== */
+const endereco = JSON.parse(localStorage.getItem("enderecoEntrega"));
+if (endereco) {
+  document.getElementById("enderecoTexto").innerText =
+    `📍 Envio para ${endereco.rua}, ${endereco.numero} - ${endereco.cidade}/${endereco.estado}`;
+}
+
+
+/* ===== FRETE SALVO ===== */
+const freteSalvo = localStorage.getItem("frete");
+
+if (freteSalvo === "0") {
+  document.getElementById("freteGratis").checked = true;
+  document.getElementById("valorFrete").innerText = "Grátis";
+} else {
+  document.getElementById("freteRapido").checked = true;
+  document.getElementById("valorFrete").innerText = "R$ 9,99";
+}
+
+/* ===== ALTERA FRETE ===== */
+document.getElementById("freteRapido").addEventListener("change", () => {
+  document.getElementById("valorFrete").innerText = "R$ 9,99";
+});
+
+document.getElementById("freteGratis").addEventListener("change", () => {
+  document.getElementById("valorFrete").innerText = "Grátis";
+});
+
+/* ===== CONTINUAR ===== */
+function continuar() {
+  document.getElementById("loadingOverlay").style.display = "flex";
+
+  if (document.getElementById("freteGratis").checked) {
+    localStorage.setItem("frete", "0");
+    localStorage.setItem("prazoEntrega", "Até 10 dias úteis");
+  } else {
+    localStorage.setItem("frete", "9.99");
+    localStorage.setItem("prazoEntrega", "Entrega rápida");
+  }
+
+  setTimeout(() => {
+    window.location.href = "checkout.html";
+  }, 1500);
+}
+</script>
+
+</body>
+</html>

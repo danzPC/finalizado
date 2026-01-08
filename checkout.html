@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escolha como pagar</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f5f5;
+  color: #333;
+  padding-bottom: 110px;
+}
+
+/* HEADER */
+.header {
+  background: #fff;
+  padding: 14px 16px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.back {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.header h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* CONTAINER */
+.container {
+  padding: 16px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  overflow: hidden;
+}
+
+/* OPTION */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+/* ICON */
+.icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* TEXT */
+.option-content {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.option-sub {
+  font-size: 13px;
+  color: #666;
+}
+
+/* ARROW */
+.arrow {
+  font-size: 20px;
+  color: #999;
+}
+
+/* RODAPÉ FIXO */
+.checkout-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #ddd;
+  padding: 14px 16px;
+}
+
+/* CUPOM */
+.cupom {
+  color: #3483fa;
+  font-size: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+/* TOTAL */
+.pagar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.pagar strong {
+  font-size: 18px;
+}
+
+/* LOADING PIX */
+#pixLoading {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 46px;
+  height: 46px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #3483fa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="back" onclick="history.back()">←</div>
+  <h1>Escolha como pagar</h1>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <div class="option" onclick="selecionarPix()">
+      <div class="icon-circle">
+        <img src="pix.png" alt="Pix">
+      </div>
+      <div class="option-content">
+        <div class="option-title">Pix</div>
+        <div class="option-sub">Aprovação imediata</div>
+      </div>
+      <div class="arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<div class="checkout-footer">
+  <div class="cupom">Inserir código do cupom</div>
+  <div class="pagar">
+    <span>Você pagará</span>
+    <strong id="totalCheckout">R$ 0,00</strong>
+  </div>
+</div>
+
+<div id="pixLoading">
+  <div class="spinner"></div>
+</div>
+
+<script>
+/* ===== TOTAL ===== */
+const produto = JSON.parse(localStorage.getItem("produto"));
+const frete = Number(localStorage.getItem("frete")) || 0;
+
+let total = 0;
+if (produto && typeof produto.preco === "number") {
+  total = produto.preco + frete;
+}
+
+document.getElementById("totalCheckout").innerText =
+  total.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+
+/* ===== PAGAMENTO ===== */
+function selecionarPix() {
+  localStorage.setItem("formaPagamento", "pix");
+
+  document.getElementById("pixLoading").style.display = "flex";
+
+  setTimeout(() => {
+    document.getElementById("pixLoading").style.display = "none";
+    window.location.href = "confirmar.html";
+  }, 500);
+}
+</script>
+
+</body>
+</html>

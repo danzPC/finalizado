@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pharma Pro - Mounjaro</title>
+    <style>
+        /* --- Variáveis --- */
+        :root {
+            --primary-blue: #3483fa;
+            --primary-yellow: #ffe600;
+            --ml-bg: #ebebeb;
+            --green-offer: #00a650;
+            --dark-text: #333;
+            --gray-text: #666;
+        }
+
+        /* --- Bloqueio para Desktop --- */
+        #desktop-msg {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            #mobile-content {
+                display: none !important;
+            }
+
+            #desktop-msg {
+                display: flex;
+                height: 100vh;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: #f5f5f5;
+                color: #333;
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                background: #f5f5f5;
+            }
+        }
+
+        /* --- Reset Geral --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Proxima Nova', -apple-system, Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--ml-bg);
+            padding-bottom: 80px;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--primary-yellow);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-mobile {
+            font-weight: bold;
+            color: #2d3277;
+        }
+
+        /* Ajuste do tamanho do logo do Mercado Pago no header */
+        .cart-icon {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            display: block;
+        }
+
+        .main-container {
+            max-width: 100%;
+            background: white;
+            padding-bottom: 20px;
+        }
+
+        /* Carrossel */
+        .image-gallery {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        .gallery-item {
+            display: none;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .gallery-item.active {
+            display: block;
+        }
+
+        .image-counter {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(245, 245, 245, 0.9);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            z-index: 2;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn.prev {
+            left: 10px;
+        }
+
+        .nav-btn.next {
+            right: 10px;
+        }
+
+        /* Produto */
+        .product-info {
+            padding: 20px;
+        }
+
+        .condition-sold {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.55);
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 18px;
+            line-height: 1.3;
+            font-weight: 500;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .price-container {
+            margin: 15px 0;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .current-price {
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--dark-text);
+        }
+
+        .discount-badge {
+            font-size: 14px;
+            color: var(--green-offer);
+            font-weight: bold;
+        }
+
+        .installments {
+            font-size: 14px;
+            color: var(--green-offer);
+            margin-top: 5px;
+        }
+
+        .benefits {
+            margin-top: 20px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .benefit-icon {
+            color: var(--green-offer);
+            font-weight: bold;
+            width: 20px;
+            text-align: center;
+        }
+
+        .benefit-text {
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .sub-text {
+            font-size: 12px;
+            color: #999;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Descrição */
+        .description-section {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        .description-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .description-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .specs-box {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .specs-row {
+            display: flex;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .specs-row:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .specs-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #333;
+            width: 40%;
+        }
+
+        .spec-value {
+            color: #666;
+            width: 60%;
+        }
+
+        .desc-sub-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .desc-bullet {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .desc-bullet li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .desc-bullet li::before {
+            content: "•";
+            color: #3483fa;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .warning-box {
+            background-color: #fff4f4;
+            border: 1px solid #ffdddd;
+            color: #d32f2f;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Reviews */
+        .reviews-section {
+            padding: 20px;
+            background: #fff;
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+            margin-bottom: 60px;
+        }
+
+        .reviews-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .big-rating {
+            font-size: 48px;
+            font-weight: 300;
+            color: #333;
+            margin-right: 15px;
+        }
+
+        .stars-container {
+            color: #3483fa;
+            font-size: 18px;
+        }
+
+        .rating-count {
+            font-size: 14px;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .review-card {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .review-stars {
+            color: #3483fa;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .review-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .review-photos {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .review-photo-item {
+            width: 70px;
+            height: 70px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+
+        .helpful-btn {
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .verified-badge {
+            color: #00a650;
+            font-size: 12px;
+            margin-left: 5px;
+            background: #e6f7ee;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Sticky Footer */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 12px 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-blue);
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cart-link {
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding-bottom: 5px;
+        }
+
+        /* Modal Checkout */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: flex-end;
+        }
+
+        .checkout-modal.open {
+            display: flex;
+        }
+
+        .checkout-content {
+            background: #fff;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 90vh;
+            border-radius: 16px 16px 0 0;
+            padding: 20px;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .checkout-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #3483fa;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-col-50 {
+            width: 50%;
+        }
+
+        .nf-option {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .nf-hidden-field {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .nf-hidden-field.visible {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .btn-submit {
+            background: #3483fa;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .address-result {
+            font-size: 12px;
+            color: #00a650;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* --- Footer "Ambiente Seguro" (CSS Corrigido e Alinhado) --- */
+        .safe-environment-footer {
+            margin-top: 25px;
+            background-color: #f8f8f8;
+            /* Fundo cinza bem clarinho */
+            padding: 15px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #999;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+
+        .safe-row {
+            display: flex;
+            align-items: flex-start;
+            /* Alinha topo com topo (corrige o desajuste) */
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .safe-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Configuração fixa para os ícones ficarem alinhados */
+        .safe-icon-box {
+            width: 24px;
+            display: flex;
+            justify-content: center;
+            padding-top: 2px;
+            /* Pequeno ajuste para alinhar com a primeira linha de texto */
+        }
+
+        .safe-text {
+            color: #666;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        /* As duas frases verdes */
+        .safe-title {
+            color: #00a650;
+            /* Verde Oficial ML */
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .mp-logo-footer {
+            width: 65px;
+            /* Logo um pouco maior para ler bem */
+            height: auto;
+        }
+
+        /* Ícones de cartão para dar segurança extra */
+        .payment-icons {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .payment-icons img {
+            height: 20px;
+            margin: 0 3px;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+/* CARD VENDEDOR */
+.seller-card {
+  background: #fff;
+  margin: 10px 0;
+  padding: 16px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.seller-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.seller-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #3483fa;
+}
+
+.seller-info {
+  flex: 1;
+}
+
+.seller-name {
+  font-size: 15px;
+  display: block;
+}
+
+.seller-meta {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* BARRA COLORIDA */
+.seller-bar {
+  display: flex;
+  gap: 4px;
+  margin: 14px 0;
+}
+
+.bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+}
+
+.bar.red { background: #f5b7b7; }
+.bar.yellow { background: #ffe28a; }
+.bar.green { background: #00a650; }
+
+/* MÉTRICAS */
+.seller-metrics {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.metric strong {
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.metric span {
+  font-size: 12px;
+  color: #666;
+}
+
+
+.search-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 0 10px;
+}
+
+.search-icon {
+  font-size: 14px;
+  color: #999;
+  margin-right: 6px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #666;
+  background: transparent;
+  width: 100%;
+}
+
+.search-box input::placeholder {
+  color: #aaa;
+}
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+    <div id="desktop-msg">
+        <div style="font-size: 50px;">📱</div>
+        <h2 style="margin: 20px 0;">Versão exclusiva para celular</h2>
+        <p>Por favor, acesse este site através do seu dispositivo móvel para ter acesso à oferta.</p>
+    </div>
+
+    <div id="mobile-content">
+        <header>
+            <div class="header-left">
+                <img src="logo.png" class="cart-icon" alt="Compra Garantida">
+            </div>
+
+    <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Estou buscando..." disabled>
+    </div>
+
+
+        </header>
+
+        <div class="main-container">
+
+            <div class="image-gallery">
+                <div class="image-counter" id="counter">1 / 2</div>
+                <button class="nav-btn prev" onclick="mudarImagem(-1)">&#10094;</button>
+
+                <img class="gallery-item active" src="principal2.png" alt="Mounjaro Caixa">
+                <img class="gallery-item active" src="principal3.png" alt="Mounjaro Caixa2">
+                <img class="gallery-item active" src="principal4.png" alt="Mounjaro Caixa3">
+                <img class="gallery-item" src="https://i.ibb.co/vxW8N8dP/produto-2.png" alt="Mounjaro Caneta">
+                <button class="nav-btn next" onclick="mudarImagem(1)">&#10095;</button>
+            </div>
+
+            <div class="product-info">
+                <div class="condition-sold">Novo | +450 vendidos</div>
+
+                <h1>Mounjaro Tirzepatida 5mg Solução Injetável 0,5ml + 4 Canetas Aplicadoras</h1>
+
+                <div style="color: #3483fa; font-size: 14px; margin-bottom: 10px;">
+                    ★★★★⯪ <span style="color:#999; font-size:12px">+1000 vendidos</span>
+                </div>
+
+                <div class="price-container">
+                    <div class="old-price">R$ 1.899,00</div>
+                    <div class="price-row">
+                        <div class="current-price">R$ 747,87</div>
+                        <div class="discount-badge">60% OFF</div>
+                    </div>
+                    <div class="installments">em <span>12x R$ 83,25 sem juros</span></div>
+                </div>
+
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🚚</div>
+                        <div class="benefit-text">
+                            <strong>Frete Grátis Refrigerado</strong>
+                            <span class="sub-text">Chega com segurança até 3 dias</span>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🛡️</div>
+                        <div class="benefit-text">
+                            <strong>Compra Garantida</strong>
+                            <span class="sub-text">Receba o produto que está esperando ou devolvemos o dinheiro.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <h2 class="description-title">Descrição</h2>
+
+                    <div class="specs-box">
+                        <div class="specs-row">
+                            <span class="spec-label">Marca</span>
+                            <span class="spec-value">Mounjaro</span>
+                        </div>
+                        <div class="specs-row">
+                            <span class="spec-label">Princípio Ativo</span>
+                            <span class="spec-value">Tirzepatida</span>
+                        </div>
+                        <div class="specs-row">
+                            <span class="spec-label">Dosagem</span>
+                            <span class="spec-value">5mg (0.5mL)</span>
+                        </div>
+                        <div class="specs-row">
+                            <span class="spec-label">Quantidade</span>
+                            <span class="spec-value">4 Canetas Preenchidas</span>
+                        </div>
+                        <div class="specs-row">
+                            <span class="spec-label">Fabricante</span>
+                            <span class="spec-value">Lilly</span>
+                        </div>
+                        <div class="specs-row">
+                            <span class="spec-label">Registro MS</span>
+                            <span class="spec-value">1126002020047</span>
+                        </div>
+                    </div>
+
+                    <div class="description-text">
+                        <span class="desc-sub-title">Para que serve o Mounjaro?</span>
+                        <p>MOUNJARO é indicado para melhorar o controle glicêmico de adultos com diabetes mellitus tipo
+                            2 em conjunto com dieta e exercícios.</p>
+
+                        <span class="desc-sub-title">Como funciona?</span>
+                        <p>Ele melhora o controle da glicemia reduzindo a quantidade de açúcar no jejum e pós-refeição
+                            através:</p>
+                        <ul class="desc-bullet">
+                            <li>Do aumento da liberação de insulina;</li>
+                            <li>Da melhora da sensibilidade à insulina (atribuída à redução de peso);</li>
+                            <li>Da redução da concentração de glucagon;</li>
+                            <li>Do atraso do esvaziamento gástrico (maior saciedade).</li>
+                        </ul>
+
+                        <span class="desc-sub-title">Como usar (Posologia)</span>
+                        <p><strong>Dose Inicial:</strong> 2,5 mg uma vez por semana por 4 semanas.</p>
+                        <p style="margin-top:5px;"><strong>Dose Seguinte:</strong> Aumentar para 5 mg uma vez por
+                            semana.</p>
+                        <p style="margin-top:5px; font-size:12px; color:#888;">*A dose máxima é de 15 mg semanais.
+                            Ajustes devem ser feitos com orientação médica.</p>
+
+                        <span class="desc-sub-title">Contraindicações</span>
+                        <p>Não utilize caso seja alérgico à tirzepatida. Não indicado para pacientes com histórico de
+                            carcinoma medular de tireoide.</p>
+
+                        <div class="warning-box">
+                            VENDA SOB PRESCRIÇÃO MÉDICA.<br><br>
+                            MOUNJARO É UM MEDICAMENTO. SEU USO PODE TRAZER RISCOS. PROCURE UM MÉDICO OU UM FARMACÊUTICO.
+                            LEIA A BULA.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- CARD DO VENDEDOR -->
+    <div class="seller-card">
+    <div class="seller-top">
+        <div class="seller-logo">KFP</div>
+
+        <div class="seller-info">
+        <strong class="seller-name">Kelson Freitas Consultor Pharma Popular</strong>
+        <div class="seller-meta">
+            +143 Seguidores · +1000 Produtos
+        </div>
+        </div>
+    </div>
+
+    
+
+    <!-- BARRA DE AVALIAÇÃO -->
+    <div class="seller-bar">
+        <span class="bar red"></span>
+        <span class="bar yellow"></span>
+        <span class="bar yellow"></span>
+        <span class="bar green"></span>
+        <span class="bar green"></span>
+    </div>
+
+    <!-- MÉTRICAS -->
+    <div class="seller-metrics">
+        <div class="metric">
+        <strong>+1000</strong>
+        <span>Vendas</span>
+        </div>
+
+        <div class="metric">
+        <strong>💬</strong>
+        <span>Bom atendimento</span>
+        </div>
+
+        <div class="metric">
+        <strong>🚚</strong>
+        <span>Entrega no prazo</span>
+        </div>
+    </div>
+    </div>
+
+
+        <div class="reviews-section">
+            <h3 class="reviews-title">Opiniões do produto</h3>
+
+            <div class="rating-summary">
+                <div class="big-rating">4.8</div>
+                <div>
+                    <div class="stars-container">★★★★⯪</div>
+                    <div class="rating-count">Média entre 452 opiniões</div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Mudou minha vida, recomendo demais!</div>
+                <div class="review-date">12 dez. 2024</div>
+                <p class="review-text">Gente, eu tava com muito medo de comprar online, mas valeu cada centavo. Em 1 mes
+                    ja vi muita diferença, as roupas tao caindo kkk. Podem comprar sem medo q é original.</p>
+                <div class="review-photos"><img src="1.png" class="review-photo-item"></div>
+                <div class="helpful-btn">👍 Útil (45)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Chegou tudo certinho</div>
+                <div class="review-date">28 nov. 2024</div>
+                <p class="review-text">Produto original, veio lacrado e bem embalado. Chegou rapido aqui em SP. Ja
+                    apliquei a primeira caneta e foi super tranquilo.</p>
+                <div class="review-photos"><img src="3.png" class="review-photo-item"></div>
+                <div class="helpful-btn">👍 Útil (22)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Bom mas demorou um pouco</div>
+                <div class="review-date">05 dez. 2024</div>
+                <p class="review-text">O produto é top, original mesmo, conferi o lote. Mas dou 4 estrelas pq a entrega
+                    demorou 6 dias pra chegar no interior, achei que fosse ser mais rapido. Mas fora isso ok.</p>
+                <div class="helpful-btn">👍 Útil (12)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Funciona muito</div>
+                <div class="review-date">15 nov. 2024</div>
+                <p class="review-text">Olha a diferença na foto... sem palavras. Tira a fome total, vc come bem
+                    pouquinho. Melhor investimento que fiz pra minha saude.</p>
+                <div class="review-photos"><img src="2.png" class="review-photo-item"></div>
+                <div class="helpful-btn">👍 Útil (89)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Vendedor atencioso</div>
+                <div class="review-date">02 jan. 2025</div>
+                <p class="review-text">Tive duvida de como aplicar e eles me responderam na hora no chat. Produto
+                    excelente.</p>
+                <div class="helpful-btn">👍 Útil (5)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Original!</div>
+                <div class="review-date">20 dez. 2024</div>
+                <p class="review-text">Veio na caixa termica, geladinho. Mto bem cuidado o envio. Recomendo a loja
+                    Pharma Pro.</p>
+                <div class="review-photos"><img src="3.png" class="review-photo-item"></div>
+                <div class="helpful-btn">👍 Útil (31)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Resultado rapido</div>
+                <div class="review-date">10 dez. 2024</div>
+                <p class="review-text">To na terceira semana e ja se foram 5kg. Nao sinto enjoo nem nada, so nao tenho
+                    fome. Felicidade define!!</p>
+                <div class="helpful-btn">👍 Útil (56)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Entrega atrasou</div>
+                <div class="review-date">18 nov. 2024</div>
+                <p class="review-text">Moro no nordeste e demorou uns 5 dias a mais do prazo, fiquei preocupada. Mas
+                    chegou tudo certo e bem refrigerado. O produto funciona.</p>
+                <div class="helpful-btn">👍 Útil (9)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Prático</div>
+                <div class="review-date">14 dez. 2024</div>
+                <p class="review-text">A caneta é super facil de usar, nao doi nada a agulha é minúscula. Podem confiar.
+                </p>
+                <div class="helpful-btn">👍 Útil (15)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Desinchou muito meu rosto</div>
+                <div class="review-date">22 dez. 2024</div>
+                <p class="review-text">Impressionante como desincha a gente. Meu rosto afinou em 15 dias. Produto
+                    milagroso.</p>
+                <div class="helpful-btn">👍 Útil (40)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Excelente</div>
+                <div class="review-date">03 jan. 2025</div>
+                <p class="review-text">Segunda vez que compro com vcs. Tudo 100%.</p>
+                <div class="helpful-btn">👍 Útil (2)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Adeus calças apertadas</div>
+                <div class="review-date">29 nov. 2024</div>
+                <p class="review-text">Voltei a usar minhas calças 38. Nao acreditava mto mas paguei pra ver e deu
+                    certo. Obrigada!</p>
+                <div class="helpful-btn">👍 Útil (63)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Tudo ok</div>
+                <div class="review-date">11 dez. 2024</div>
+                <p class="review-text">Produto conforme o anuncio. Veio com nota fiscal.</p>
+                <div class="helpful-btn">👍 Útil (4)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Transportadora ruim</div>
+                <div class="review-date">01 dez. 2024</div>
+                <p class="review-text">O produto é bom, ja usei ozempic e esse é melhor. Mas a transportadora demorou 4
+                    dias pra entregar na minha cidade.</p>
+                <div class="helpful-btn">👍 Útil (7)</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★ <span class="verified-badge">Compra Verificada</span></div>
+                <div class="review-title">Recomendo</div>
+                <div class="review-date">27 dez. 2024</div>
+                <p class="review-text">Show de bola. Comprarei novamente mes que vem.</p>
+                <div class="helpful-btn">👍 Útil (1)</div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="#" style="color: #3483fa; font-weight: bold; font-size: 14px;">Ver todas as opiniões</a>
+            </div>
+        </div>
+
+        <div class="sticky-footer">
+        <button class="btn-buy" onclick="comprar()">Comprar agora</button>
+
+        <script>
+        function comprar() {
+        const produto = {
+            nome: "Mounjaro Tirzepatida 5mg",
+            preco: 747.87
+        };
+
+        localStorage.setItem("produto", JSON.stringify(produto));
+        window.location.href = "loading.html";
+        }
+        </script>
+
+            <div class="btn-cart-link">Adicionar ao carrinho</div>
+        </div>
+
+        <div class="checkout-modal" id="checkoutModal">
+            <div class="checkout-content">
+                <div class="checkout-header">
+                    <span class="checkout-title">Finalizar Compra</span>
+                    <button class="close-btn" onclick="fecharCheckout()">×</button>
+                </div>
+
+                <form id="checkoutForm" onsubmit="irParaPagamento(event)">
+                    <div class="form-group">
+                        <label class="form-label">Nome Completo</label>
+                        <input type="text" class="form-input" id="nomeCliente" placeholder="Ex: João Silva" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">E-mail para contato</label>
+                        <input type="email" class="form-input" placeholder="seu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Celular / WhatsApp</label>
+                        <input type="tel" class="form-input" placeholder="(11) 99999-9999" required>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+
+                    <div class="form-group">
+                        <label class="form-label">CEP</label>
+                        <input type="text" class="form-input" id="cepInput" placeholder="00000-000" maxlength="9"
+                            onblur="buscarEndereco()">
+                        <div class="address-result" id="addressResult">✓ Entrega em até 5 dias!</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex:2;">
+                            <label class="form-label">Endereço</label>
+                            <input type="text" class="form-input" id="ruaInput" placeholder="Rua..." required>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label class="form-label">Número</label>
+                            <input type="text" class="form-input" placeholder="123" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col-50">
+                            <label class="form-label">Bairro</label>
+                            <input type="text" class="form-input" id="bairroInput" required>
+                        </div>
+                        <div class="form-group form-col-50">
+                            <label class="form-label">Cidade</label>
+                            <input type="text" class="form-input" id="cidadeInput" required>
+                        </div>
+                    </div>
+
+                    <div class="nf-option">
+                        <input type="checkbox" id="checkNF" onchange="toggleNF()">
+                        <label for="checkNF" style="font-size:14px; color:#333;">Quero Nota Fiscal (CPF)</label>
+                    </div>
+
+                    <div id="campoCPF" class="nf-hidden-field">
+                        <div class="form-group">
+                            <label class="form-label">Digite seu CPF</label>
+                            <input type="text" class="form-input" id="cpfInput" placeholder="000.000.000-00"
+                                maxlength="14" onblur="buscarNomeCPF()">
+                            <div style="font-size:12px; color:#666; margin-top:5px;" id="cpfNomeResultado"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Ir para o Pagamento</button>
+
+                    <div class="safe-environment-footer">
+
+                        <div class="safe-row">
+                            <div class="safe-icon-box">
+                                <img src="https://i.ibb.co/wrzYsws4/mercado-pago-logo.png" style="width: 28px;">
+                            </div>
+                            <div class="safe-text">
+                                <span class="safe-title">Compra Garantida com Mercado Pago</span>
+                                Receba o produto que está esperando ou devolvemos o dinheiro.
+                            </div>
+                        </div>
+
+                        <div class="safe-row">
+                            <div class="safe-icon-box">
+                                <span style="color:#00a650; font-size:20px;">🔒</span>
+                            </div>
+                            <div class="safe-text">
+                                <span class="safe-title">Ambiente Protegido</span>
+                                Seus dados estão 100% seguros com criptografia SSL.
+                            </div>
+                        </div>
+
+                        <div class="payment-icons">
+                            Pagamento processado via Mercado Pago<br><br>
+                            <img src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+                            <img src="https://img.icons8.com/color/48/mastercard.png" alt="Master">
+
+                            <img src="https://img.icons8.com/color/48/pix.png" alt="Pix">
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        /* --- Carrossel --- */
+        let indiceAtual = 0;
+        const imagens = document.querySelectorAll('.gallery-item');
+        const contador = document.getElementById('counter');
+        const totalImagens = imagens.length;
+
+        function mudarImagem(direcao) {
+            imagens[indiceAtual].classList.remove('active');
+            indiceAtual += direcao;
+            if (indiceAtual >= totalImagens) indiceAtual = 0;
+            if (indiceAtual < 0) indiceAtual = totalImagens - 1;
+            imagens[indiceAtual].classList.add('active');
+            contador.textContent = (indiceAtual + 1) + ' / ' + totalImagens;
+        }
+
+        /* --- Checkout Logic --- */
+        function abrirCheckout() { window.location.href = "loading.html"; }
+        function fecharCheckout() { document.getElementById('checkoutModal').classList.remove('open'); }
+
+        /* API CEP */
+        function buscarEndereco() {
+            let cep = document.getElementById('cepInput').value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                document.getElementById('ruaInput').value = "...";
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('ruaInput').value = data.logradouro;
+                            document.getElementById('bairroInput').value = data.bairro;
+                            document.getElementById('cidadeInput').value = data.localidade + '-' + data.uf;
+                            document.getElementById('addressResult').style.display = 'block';
+                        } else { alert("CEP não encontrado."); }
+                    });
+            }
+        }
+
+        /* CPF */
+        function toggleNF() {
+            const check = document.getElementById('checkNF');
+            const campo = document.getElementById('campoCPF');
+            if (check.checked) campo.classList.add('visible');
+            else campo.classList.remove('visible');
+        }
+
+        function buscarNomeCPF() {
+            const cpf = document.getElementById('cpfInput').value;
+            const res = document.getElementById('cpfNomeResultado');
+
+            // VOLTA AO SISTEMA ANTIGO: PEGA O NOME QUE A PESSOA DIGITOU
+            const nomeDigitado = document.getElementById('nomeCliente').value;
+
+            if (cpf.length >= 11) {
+                res.innerHTML = "Consultando base de dados...";
+                res.style.color = "#666";
+
+                setTimeout(() => {
+                    // Usa o nome digitado, ou "Titular da Conta" se estiver vazio
+                    const nomeFinal = nomeDigitado ? nomeDigitado : "Titular da Conta";
+                    res.innerHTML = "✔ Nome associado: <strong>" + nomeFinal + "</strong> (Confirmado na Receita)";
+                    res.style.color = "#00a650";
+                }, 500);
+            }
+        }
+
+        function irParaPagamento(e) {
+            e.preventDefault();
+            alert("Redirecionando para o Pagamento...");
+        }
+    </script>
+</body>
+
+</html>
